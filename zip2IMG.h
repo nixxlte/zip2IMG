@@ -3,6 +3,9 @@
 
 #pragma once
 
+#include "zip2IMG.h"
+#include <fstream>
 #include <iostream>
+#include <string>
 
 // TODO: Referencie os cabeçalhos adicionais de que seu programa precisa aqui.
