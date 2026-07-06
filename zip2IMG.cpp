@@ -16,6 +16,7 @@ int main(int argc, char* argv[]) {
 
 		if (arg == (prefix + "help")) {
 			printf("Avaiable arguments: \n");
+			return 0;
 		}
 		else if (arg == (prefix + "install")) {
 			#ifdef _WIN32
@@ -30,7 +31,7 @@ int main(int argc, char* argv[]) {
 				file = argv[i + 1];
 
 				#ifdef _WIN32
-					std::string cmd = "7z t \"" + file + "\" >nul 2>&1";
+					std::string cmd = "\"C:\\Program Files\\7-zip\\7z.exe\" >nul 2>&1";
 					int result = system(cmd.c_str());
 				#elif __linux__
 					std::string cmd = "7z t \"" + file + "\" >nul 2>&1";
@@ -42,9 +43,10 @@ int main(int argc, char* argv[]) {
 					return 1;
 				}
 
-				printf("Make sure you have all the dependencies installed.\n if you dont have, run zip2img --install");
+				printf("Make sure you have all the dependencies installed.\n if you dont have, run zip2img --install\n");
 				#ifdef _WIN32
 					system("\"C:\\Program Files\\7-zip\\7z.exe\" > version.txt");
+					// std::cout << "\"C:\\Program Files\\7-zip\\7z.exe\" > version.txt" << endl;
 					std::ifstream text("version.txt");
 					if (!text.is_open()) {
 						std::cerr << "Cant get version.txt\n";
@@ -59,13 +61,17 @@ int main(int argc, char* argv[]) {
 				
 				if (result == 0) {
 					#ifdef _WIN32
-						system(("\"C:\\Program Files\\7-zip\\7z.exe\" x \"" + file + "\"").c_str());
+						cmd = "\"C:\\Program Files\\7-zip\\7z.exe\" x \"" + file + "\" ";
+						std::cout << "\n" << cmd << endl;
+						system((cmd).c_str());
 					#elif __linux__
 						system("7z \"" + file + "\"");
 					#endif
 				}
 			}
+			else {
+				printf("Please select a zip file");
+			}
 		}
 	}
-	return 0;
 }
