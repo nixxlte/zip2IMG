@@ -45,16 +45,25 @@ int main(int argc, char* argv[]) {
 				printf("Make sure you have all the dependencies installed.\n if you dont have, run zip2img --install");
 				#ifdef _WIN32
 					system("\"C:\\Program Files\\7-zip\\7z.exe\" > version.txt");
-					std::ifstream file("version.txt");
-					if (!file.is_open()) {
+					std::ifstream text("version.txt");
+					if (!text.is_open()) {
 						std::cerr << "Cant get version.txt\n";
 					}
 					std::string line;
-					if (std::getline(file, line)) {
+					if (std::getline(text, line)) {
 						std::cout << line << std::endl;
 					}
+					text.close();
+					system("del /f version.txt");
 				#endif
-
+				
+				if (result == 0) {
+					#ifdef _WIN32
+						system(("\"C:\\Program Files\\7-zip\\7z.exe\" x \"" + file + "\"").c_str());
+					#elif __linux__
+						system("7z \"" + file + "\"");
+					#endif
+				}
 			}
 		}
 	}
