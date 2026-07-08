@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
 						std::cout << "\n" << cmd << endl;
 						system((cmd).c_str());
 					#elif __linux__
-						system("7z \"" + file + "\"");
+						system("7z x \"" + file + "\"");
 					#endif
 				}
 			}
